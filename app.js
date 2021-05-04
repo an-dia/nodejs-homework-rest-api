@@ -26,7 +26,7 @@ app.use((_req, res) => {
 app.use((err, req, res, next) => {
   const status = err.status || 500
   res.status(status).json({
-    status: status == 500 ? 'fail' : 'error',
+    status: status === 500 ? 'fail' : 'error',
     code: status,
     message: err.message
   })
