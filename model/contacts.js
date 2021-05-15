@@ -23,7 +23,7 @@ const listContacts = async (userId, query) => {
     select: filter ? filter.split('|').join(' ') : '',
     populate: {
       path: 'owner',
-      select: 'email subscription -_id'
+      select: 'name email subscription -_id'
     },
   })
   return results
