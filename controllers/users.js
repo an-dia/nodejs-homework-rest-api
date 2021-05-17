@@ -60,9 +60,7 @@ const logout = async (req, res, next) => {
 
 const  currentUser = async (req, res, next) => {
    try {
-    const token = req.user.token;
-    const { id } = jwt.verify(token, JWT_SECRET_KEY);
-    const { email, subscription } = await Users.findById(id);
+    const { id, email, subscription } = req.user
     return res.status(HttpCode.OK).json({
         status: 'success',
         code: HttpCode.OK,
@@ -79,8 +77,7 @@ const  currentUser = async (req, res, next) => {
 
 const updateUserSubscription  = async (req, res, next) => {
   try {
-    const token = req.user.token;
-    const { id } = jwt.verify(token, JWT_SECRET_KEY);
+    const { id } = req.user
     const user = await Users.updateSubscription(id, req.body)
     if (user) {
       return res.json({
