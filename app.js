@@ -4,24 +4,26 @@ const cors = require('cors')
 const helmet = require('helmet')
 const boolParser = require('express-query-boolean')
 const rateLimit = require("express-rate-limit")
+const { HttpCode } = ('./helper/constants.js')
 
 const contactsRouter = require('./routes/contacts')
-const userRouter = require('./routes/users')
+const usersRouter = require('./routes/users')
 
 const app = express()
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
 app.use(helmet())
-app.use(logger(formatsLogger))
+app.get('env') !== 'test' && app.use(logger(formatsLogger))
+app.use(express.static('public'))
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 30, // limit each IP to 100 requests per windowMs
   handler: (req, res, next) => {
-     return res.status(429).json({
+     return res.status(HttpCode.MANY_REQUESTS).json({
       status: 'error',
-      code: 429,
+      code: HttpCode.MANY_REQUESTS,
       message: 'Too many Requests'
     })
   }
@@ -38,11 +40,11 @@ app.use(cors({
 app.use(express.json())
 app.use(boolParser())
 
-app.use('/api/users', userRouter)
+app.use('/api/users', usersRouter)
 app.use('/api/contacts', contactsRouter)
 
 app.use((_req, res) => {
-  res.status(404).json({ message: 'Not Found' })
+  res.status(HttpCode.NOT_FOUND).json({ message: 'Not Found' })
 })
 
 app.use((err, req, res, next) => {

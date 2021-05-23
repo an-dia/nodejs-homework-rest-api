@@ -13,6 +13,7 @@ const HttpCode = {
   FORBIDDEN: 403,
   NOT_FOUND: 404,
   CONFLICT: 409,
+  MANY_REQUESTS: 429,  
 }
 
 module.exports = {

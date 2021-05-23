@@ -9,12 +9,12 @@ const getAll = async (req, res, next) => {
     return res.json({
       status: 'success',
       code: HttpCode.OK,
-      data: {
+       data: {
         contacts,
-      }
+      },
     })
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
   }
   
 }
@@ -23,14 +23,14 @@ const getById = async (req, res, next) => {
   try {
     const userId = req.user?.id
     const contact = await Contacts.getContactById(userId, req.params.contactId)
-    console.log(contact)// сработает toObject()
+    //console.log(contact)// сработает toObject()
     if (contact){
     return res.status(HttpCode.OK).json({
       status: 'success',
       code: HttpCode.OK,
       data: {
-        contact, // сработает toJSON()
-      }
+          contact,
+        }, // сработает toJSON()
     })
     } else {
       return res.status(HttpCode.NOT_FOUND).json({
@@ -39,8 +39,8 @@ const getById = async (req, res, next) => {
       message: 'Not found'
     })
     }
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
   }
  
 }
@@ -52,12 +52,13 @@ const createContact = async (req, res, next) => {
     return res.status(HttpCode.CREATED).json({
       status: 'success',
       code: HttpCode.CREATED,
+      message: 'Contact add',
       data: {
         contact,
-      }
+      },
     })
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
   }
 }
 
@@ -91,11 +92,11 @@ const updateContact = async (req, res, next) => {
       return res.status(HttpCode.NOT_FOUND).json({
       status: 'error',
       code: HttpCode.NOT_FOUND,
-      message: 'Not found'
+      data: 'Not found'
     })
     }
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
   }
 }
 
@@ -119,8 +120,8 @@ const removeContact = async (req, res, next) => {
       message: 'Not found'
     })
     }
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
   }
 }
 
@@ -143,8 +144,8 @@ const updateContactPatch = async (req, res, next) => {
       message: 'Not found'
     })
     }
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
   }
 }
 
@@ -176,8 +177,8 @@ const updateStatusContact = async (req, res, next) => {
       message: 'Not found'
     })
     
-  } catch (err) {
-    next(err)
+  } catch (e) {
+    next(e)
   }
 }
 

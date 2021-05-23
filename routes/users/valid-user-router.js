@@ -6,7 +6,7 @@ const schemaCreateUser = Joi.object({
         .min(3)
         .max(30)
         .pattern(/[A-Z]\w+/)
-        .required(),
+        .optional(),
 
      email: Joi.string()
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'uk', 'org'] } }).required(),
