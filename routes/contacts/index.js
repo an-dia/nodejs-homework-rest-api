@@ -16,7 +16,7 @@ router.post('/', guard, validCreateContact, ctrl.createContact)
 
 router.get('/:contactId', guard, validObjectId, ctrl.getById)
 router.put('/:contactId', guard, validUpdateContact, ctrl.updateContact)
-router.delete('/:contactId', guard, ctrl.removeContact)
+router.delete('/:contactId', guard, validObjectId, ctrl.removeContact)
 router.patch('/:contactId', guard, validObjectId, validUpdateContact, ctrl.updateContactPatch)
 router.patch(
   '/:contactId/favorite',

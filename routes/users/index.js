@@ -6,6 +6,7 @@ const rateLimit = require("express-rate-limit")
 const role = require('../../helper/role')
 const { Subscription } = require('../../helper/constants')
 const {validCreateUser, validLogin, validUpdateSubscription} = require('./valid-user-router')
+const uploadAvatar = require('../../helper/upload-avatar')
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 60 minutes
@@ -18,12 +19,18 @@ const limiter = rateLimit({
     })
   }
 })
-
-router.post('/register', validCreateUser, limiter, ctrl.registration)
+//validCreateUser,
+router.post('/register',  limiter, ctrl.registration)
 router.post('/login', validLogin, ctrl.login)
 router.post('/logout', guard, ctrl.logout)
 router.get('/current', guard, ctrl.currentUser)
 router.patch('/', guard, validUpdateSubscription, ctrl.updateUserSubscription)
+router.patch(
+  '/avatars',
+  guard,
+  uploadAvatar.single('avatar'),
+  ctrl.updateAvatar,
+)
 
 router.get('/starter', guard, role(Subscription.STARTER), ctrl.onlyStarter)
 router.get('/pro', guard, role(Subscription.PRO), ctrl.onlyPro)

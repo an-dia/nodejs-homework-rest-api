@@ -43,15 +43,15 @@ const removeContact = async (userId, contactId) => {
 }
 
 const addContact = async (userId, body) => {
-  // try {
+  try {
     const result = await Contacts.create({...body, owner: userId})
     return result
-  // } catch (err) {
-  //   if (err.name === 'ValidationError') {
-  //     err.status = 400
-  //   }
-  //   throw err
-  // }
+  } catch (err) {
+    if (err.name === 'ValidationError') {
+      err.status = 400
+    }
+    throw err
+  }
  
 }
 
