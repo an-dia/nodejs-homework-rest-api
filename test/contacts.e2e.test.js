@@ -108,7 +108,9 @@ describe('Testing the route api/contacts', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'application/json')
         .send({test: 1})
-      expect(res.status).toEqual(400)
+        expect(res.status).toEqual(400)
+        
+        
       expect(res.body).toBeDefined()
       done()
     })
