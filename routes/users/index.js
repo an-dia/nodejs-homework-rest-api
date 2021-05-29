@@ -36,4 +36,9 @@ router.get('/starter', guard, role(Subscription.STARTER), ctrl.onlyStarter)
 router.get('/pro', guard, role(Subscription.PRO), ctrl.onlyPro)
 router.get('/business', guard, role(Subscription.BUSINESS), ctrl.onlyBusiness)
 
+//Подтверждение внрификации
+router.get('/verify/:verificationToken', ctrl.verify)
+//Повторить отправку письма
+router.post('/verify', ctrl.repeatEmailVerify)
+
 module.exports = router
